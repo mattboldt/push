@@ -24,14 +24,6 @@
     <%= f.text_field :git_file_name %>
   </div>
   <div class="field">
-    <%= f.label :github_url %><br>
-    <%= f.text_field :github_url %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
     <%= f.label :body %><br>
     <%= f.text_area :body, :value => "#{@file}", :cols => "80", :rows => "20" %>
   </div>

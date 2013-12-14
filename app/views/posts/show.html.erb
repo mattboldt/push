@@ -21,8 +21,13 @@
 </p>
 
 <p>
-  <strong>Body:</strong>
+  <strong>Git File:</strong>
   <%= raw @file %>
+</p>
+
+<p>
+  <strong>DB Body</strong>
+  <%= @post.body %>
 </p>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
