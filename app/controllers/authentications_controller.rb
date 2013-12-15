@@ -1,4 +1,5 @@
 class AuthenticationsController < ApplicationController
+  include GithubHelper
   # before_action :authenticate_user!
   def index
     @authentications = current_user.authentications if current_user
@@ -28,14 +29,27 @@ class AuthenticationsController < ApplicationController
         :uid => omniauth['uid'],
         :token => omniauth['credentials']['token']
       )
-      flash[:notice] = "Authentication successful."
-      redirect_to authentications_url
+
+      # create new repo
+      if create_github_repo
+        flash[:notice] = "Authentication successful."
+        redirect_to posts_path
+      else
+        flash[:notice] = "Couldn't create repo."
+        redirect_to posts_path
+      end
+
     else
       user = User.new
       user.apply_omniauth(omniauth)
       if user.save
         flash[:notice] = "Signed in successfully."
         sign_in_and_redirect(:user, user)
+
+        # create new repo
+        if !create_github_repo
+          flash[:notice] = "Couldn't create repo."
+        end
       else
         session[:omniauth] = omniauth.except('extra')
         redirect_to new_user_registration_url

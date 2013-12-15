@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-GitBlog::Application.config.secret_key_base = '0b70e0dba6d5b8dfd4c12ccc7229cdf92faf6a439251da75e89415a481d7803439d600819d7c9286fa2d4a781ee61b83ab3efa95a242a8e04d2ae43352e30aac'
+Push::Application.config.secret_key_base = '0b70e0dba6d5b8dfd4c12ccc7229cdf92faf6a439251da75e89415a481d7803439d600819d7c9286fa2d4a781ee61b83ab3efa95a242a8e04d2ae43352e30aac'

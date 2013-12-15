@@ -15,19 +15,19 @@
   </thead>
 
   <tbody>
-  <% for post in @posts %>
-    <tr>
+    <% @posts.each do |post| %>
+      <tr>
         <td><%= post.title %></td>
         <td><%= post.slug %></td>
         <td><%= post.github_url %></td>
         <td><%= post.user_id %></td>
         <td><%= post.body %></td>
-        <td><%= link_to 'Show', post_path(post) %></td>
-        <td><%= link_to 'Edit', post_path(post) %></td>
+        <td><%= link_to 'Show', post %></td>
+        <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-  <% end %>
-</tbody>
+    <% end %>
+  </tbody>
 </table>
 
 <br>

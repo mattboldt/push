@@ -23,7 +23,7 @@ gem 'nokogiri'
 
 gem "octokit", "~> 2.0"
 
-
+gem 'rename'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

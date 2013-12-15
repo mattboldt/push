@@ -1,9 +1,9 @@
-GitBlog::Application.routes.draw do
+Push::Application.routes.draw do
   resources :authentications
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' }
   root :to => "posts#index"
-  resources :users
   resources :posts
+  resources :users
 
   get "/auth/:provider/callback" => 'authentications#create'
   get "/auth/failure" => "authentications#failure"

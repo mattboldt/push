@@ -4,6 +4,7 @@ class Post < ActiveRecord::Base
 
   # before_save :authenticate_user!
   belongs_to :user
+  validates :user_id, presence: true
 
   private
     def save_github_api_response

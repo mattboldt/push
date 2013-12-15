@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable
+         :recoverable, :rememberable, :trackable, :validatable
   has_many :posts
 
   def apply_omniauth(omniauth)
+    self.email = omniauth['info']['email'] if email.blank?
     authentications.build(
         :username => omniauth['info']['nickname'],
         :provider => omniauth['provider'],

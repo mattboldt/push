@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-GitBlog::Application.load_tasks
+Push::Application.load_tasks

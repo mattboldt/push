@@ -1,16 +1,16 @@
-class PostsController < ApplicationController
+class Users::PostsController < ApplicationController
   include GithubHelper
   require 'redcarpet'
   require 'open-uri'
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   # before_action :load_file, only: [:show, :edit]
-  before_action :github_auth, only: [:new, :edit, :create, :update, :destroy]
+  before_action :github_auth
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = current_user.posts.all
   end
 
   # GET /posts/1
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.new(post_params)
     @post['user_id'] = current_user.id
-    commit_to_github(post_params)
+    create_github_repo_file(post_params)
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -53,7 +53,7 @@ class PostsController < ApplicationController
   def update
     # raise @post.to_yaml
     @post['user_id'] = current_user.id
-    commit_to_github(post_params)
+    update_github_repo_file(post_params)
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -94,4 +94,5 @@ class PostsController < ApplicationController
       params.require(:post).permit(:title, :slug, :github_url, :user_id, :body, :git_file_name, :git_commit_message)
     end
 
-  end
+
+end
