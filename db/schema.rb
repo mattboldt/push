@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131214065143) do
+ActiveRecord::Schema.define(version: 20131215041225) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -27,13 +27,14 @@ ActiveRecord::Schema.define(version: 20131214065143) do
   create_table "posts", force: true do |t|
     t.string   "title"
     t.string   "slug"
-    t.string   "github_url"
+    t.string   "git_url"
     t.integer  "user_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "git_file_name"
     t.string   "git_commit_message"
+    t.string   "desc"
   end
 
   create_table "users", force: true do |t|

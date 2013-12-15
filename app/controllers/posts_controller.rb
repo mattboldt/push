@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    file = open(@post.github_url) { |f| f.read }
+    file = open(@post.git_url) { |f| f.read }
     @file = render_markdown(file)
   end
 
@@ -27,7 +27,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    file = open(@post.github_url) { |f| f.read }
+    file = open(@post.git_url) { |f| f.read }
     @file = file
   end
 
@@ -91,7 +91,7 @@ class PostsController < ApplicationController
 
     # strong params
     def post_params
-      params.require(:post).permit(:title, :slug, :github_url, :user_id, :body, :git_file_name, :git_commit_message)
+      params.require(:post).permit(:title, :slug, :desc, :git_url, :user_id, :body, :git_file_name, :git_commit_message)
     end
 
   end

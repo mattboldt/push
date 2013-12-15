@@ -8,7 +8,7 @@ class Post < ActiveRecord::Base
 
   private
     def save_github_api_response
-      self.github_url = "https://raw.github.com/mattboldt/gitblog/master/#{self.git_file_name}"
+      self.git_url = "https://raw.github.com/mattboldt/gitblog/master/#{self.git_file_name}"
     end
     def render_body
       require 'redcarpet'
