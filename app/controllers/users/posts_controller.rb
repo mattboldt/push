@@ -27,14 +27,12 @@ class Users::PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    respond_to do |format|
-      if is_owner?
-        file = open(@post.git_url) { |f| f.read }
-        @file = file
-      else
-        format.html { redirect_to post_path(@user, @post), notice: 'This post does not belong to you!'  }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    @user = current_user
+    if is_owner?
+      file = open(@post.git_url) { |f| f.read }
+      @file = file
+    else
+      redirect_to post_path(@user, @post), notice: 'This post does not belong to you!'
     end
   end
 
@@ -59,7 +57,7 @@ class Users::PostsController < ApplicationController
       commit_to_github(post_params)
       respond_to do |format|
         if @post.update(post_params)
-          format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+          format.html { redirect_to posts_path(@user, @post), notice: 'Post was successfully updated.' }
           format.json { head :no_content }
         else
           format.html { render action: 'edit' }
@@ -89,12 +87,12 @@ class Users::PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = current_user.posts.find(params[:id])
+      @post = User.find(params[:user_id]).posts.find(params[:id])
     end
 
     # strong params
     def post_params
-      params.require(:post).permit(:title, :slug, :github_url, :user_id, :body, :git_file_name, :git_commit_message)
+      params.require(:post).permit(:title, :desc, :slug, :github_url, :user_id, :body, :git_file_name, :git_commit_message)
     end
 
 
