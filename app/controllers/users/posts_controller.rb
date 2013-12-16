@@ -1,45 +1,50 @@
 class Users::PostsController < ApplicationController
   include GithubHelper
+  include PostsHelper
   require 'redcarpet'
   require 'open-uri'
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
-  # before_action :load_file, only: [:show, :edit]
-  before_action :github_auth
+  before_action :github_auth, only: [:new, :edit, :create, :update, :destroy]
 
   # GET /posts
-  # GET /posts.json
   def index
     @posts = current_user.posts.all
   end
 
   # GET /posts/1
-  # GET /posts/1.json
   def show
-    file = open(@post.github_url) { |f| f.read }
+    file = open(@post.git_url) { |f| f.read }
     @file = render_markdown(file)
   end
 
+
   # GET /posts/new
   def new
-    @post = Post.new
+    @user = current_user
+    @post = @user.posts.new
   end
 
   # GET /posts/1/edit
   def edit
-    file = open(@post.github_url) { |f| f.read }
-    @file = file
+    respond_to do |format|
+      if is_owner?
+        file = open(@post.git_url) { |f| f.read }
+        @file = file
+      else
+        format.html { redirect_to post_path(@user, @post), notice: 'This post does not belong to you!'  }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /posts
-  # POST /posts.json
   def create
     @post = current_user.posts.new(post_params)
-    @post['user_id'] = current_user.id
-    create_github_repo_file(post_params)
+    commit_to_github(post_params)
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to post_path(@user, @post), notice: 'Post was successfully created.' }
         format.json { render action: 'show', status: :created, location: @post }
       else
         format.html { render action: 'new' }
@@ -49,44 +54,42 @@ class Users::PostsController < ApplicationController
   end
 
   # PATCH/PUT /posts/1
-  # PATCH/PUT /posts/1.json
   def update
-    # raise @post.to_yaml
-    @post['user_id'] = current_user.id
-    update_github_repo_file(post_params)
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+    if is_owner?
+      commit_to_github(post_params)
+      respond_to do |format|
+        if @post.update(post_params)
+          format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @post.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to @post, notice: 'This post does not belong to you!'
     end
   end
 
   # DELETE /posts/1
-  # DELETE /posts/1.json
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url }
-      format.json { head :no_content }
+    if is_owner?
+      @post.destroy
+      respond_to do |format|
+        format.html { redirect_to posts_url }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to @post, notice: 'This post does not belong to you!'
     end
   end
 
-  # render markdown from github file
-  def render_markdown(file)
-    renderer = PygmentizeHTML
-    extensions = {:autolink => true, :hard_wrap => true, :space_after_headers => true, :highlight => true, :tables => true, :fenced_code_blocks => true, :gh_blockcode => true}
-    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
-    @file = redcarpet.render file
-  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = current_user.posts.find(params[:id])
     end
 
     # strong params
