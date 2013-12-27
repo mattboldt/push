@@ -3,8 +3,8 @@ Push::Application.routes.draw do
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' }
   get "posts" => "posts#index"
   root :to => "posts#index"
-  resources :users do
-    resources :posts, :controller => "users/posts"
+  resources :users, :path => "/@/" do
+    resources :posts, :controller => "users/posts", :path => "/"
   end
 
   get "/auth/:provider/callback" => 'authentications#create'

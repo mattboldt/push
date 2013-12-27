@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :posts
 
+  # custom_slugs_with(:username)
+
   def apply_omniauth(omniauth)
     self.email = omniauth['info']['email'] if email.blank?
     authentications.build(
@@ -16,6 +18,8 @@ class User < ActiveRecord::Base
         :token => omniauth['credentials']['token']
       )
   end
+
+
   # def self.from_omniauth(auth)
   #   find_by_provider_and_uid(auth["provider"], auth["uid"]) || create_with_omniauth(auth)
   # end

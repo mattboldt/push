@@ -9,7 +9,8 @@ class Users::PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = current_user.posts.all
+    @user = User.find_by_username(params[:user_id])
+    @posts = @user.posts.all
   end
 
   # GET /posts/1
@@ -87,7 +88,7 @@ class Users::PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = User.find(params[:user_id]).posts.find(params[:id])
+      @post = User.find_by_username(params[:user_id]).posts.find(params[:id])
     end
 
     # strong params
