@@ -28,7 +28,8 @@ class Users::PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @user = current_user
+    # @user = current_user
+    @user = User.find_by_username(params[:user_id])
     if is_owner?
       file = open(@post.git_url) { |f| f.read }
       @file = file
@@ -89,6 +90,7 @@ class Users::PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = User.find_by_username(params[:user_id]).posts.find(params[:id])
+      username = current_user.username
     end
 
     # strong params

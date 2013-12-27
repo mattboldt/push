@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :posts
 
+  def to_param
+    username
+  end
   # custom_slugs_with(:username)
 
   def apply_omniauth(omniauth)

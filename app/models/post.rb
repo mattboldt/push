@@ -6,9 +6,6 @@ class Post < ActiveRecord::Base
   belongs_to :user
   validates :user_id, presence: true
 
-  def to_param
-    username
-  end
 
   private
     def save_github_api_response
