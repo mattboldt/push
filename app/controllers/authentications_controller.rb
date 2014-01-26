@@ -21,7 +21,8 @@ class AuthenticationsController < ApplicationController
         :token => omniauth['credentials']['token']
       )
       flash[:notice] = "Signed in successfully."
-      sign_in_and_redirect(:user, authentication.user)
+      sign_in(:user, authentication.user)
+      redirect_to current_user
     elsif current_user
       current_user.authentications.create!(
         :username => omniauth['info']['nickname'],
@@ -32,11 +33,11 @@ class AuthenticationsController < ApplicationController
 
       # create new repo
       if create_github_repo
-        flash[:notice] = "Authentication successful."
-        redirect_to posts_path
+        flash[:notice] = "Repo created."
+        redirect_to user_posts_path
       else
         flash[:notice] = "Couldn't create repo."
-        redirect_to posts_path
+        redirect_to user_posts_path
       end
 
     else

@@ -28,12 +28,20 @@
     <%= f.text_field :git_file_name %>
   </div>
   <div class="field">
+    <%= f.label :git_url %><br>
+    <%= f.text_field :git_url %>
+  </div>
+  <div class="field">
+    <%= f.label :git_raw_url %><br>
+    <%= f.text_field :git_raw_url %>
+  </div>
+  <div class="field">
     <%= f.label :body %><br>
-    <%= f.text_area :body, :value => "#{@file}", :cols => "80", :rows => "20" %>
+    <%= f.text_area :body, :cols => "80", :rows => "10" %>
   </div>
   <div class="field">
     <%= f.label :git_commit_message %><br>
-    <%= f.text_area :git_commit_message, :value => "Creating a new commit.", :cols => "80", :rows => "5" %>
+    <%= f.text_area :git_commit_message, :value => "Updating #{@post.git_file_name}", :cols => "80", :rows => "5" %>
   </div>
   <div class="actions">
     <%= f.submit %>

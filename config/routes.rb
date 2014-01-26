@@ -2,7 +2,7 @@ Push::Application.routes.draw do
   resources :authentications
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' }
   get "posts" => "posts#index"
-  root :to => "posts#index"
+  root :to => "home#index"
   resources :users, :path => "/@/" do
     resources :posts, :controller => "users/posts", :path => "/"
   end

@@ -1,10 +1,16 @@
 class Post < ActiveRecord::Base
+  validates :git_file_name, presence: true
+  validates :title, presence: true
+  validates :desc, presence: true
+  validates :slug, presence: true
+
   # before_update :save_update_to_github
   before_create :save_github_api_response
 
   # before_save :authenticate_user!
   belongs_to :user
   validates :user_id, presence: true
+
 
 
   private

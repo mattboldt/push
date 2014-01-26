@@ -1,7 +1,6 @@
 <h1>All Posts</h1>
 
   <% for post in @posts %>
-  <%= post.user.username %>
-    <h1><%= link_to post.title, user_post_path(post.user, post) %></h1>
+    <h1><%= link_to post.title, user_post_path(post.user, post) %> - <%= link_to post.user.username, user_posts_path(post.user) %></h1>
     <p><%= post.desc %></p>
   <% end %>

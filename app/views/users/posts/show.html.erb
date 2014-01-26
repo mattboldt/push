@@ -1,8 +1,17 @@
 
+<% if user_signed_in? && is_owner? %>
+	<%= link_to "Edit this guy", edit_user_post_path(current_user, @post) %>
+<% end %>
+
+
 <h1><%= @post.title %></h1>
+<small>
+	<%= link_to @post.git_url do %>
+		View <%= @post.git_file_name %> on GitHub
+	<% end %>
+</small>
 <p>
   <%= @post.desc %>
 </p>
 
-  <%= raw @file %>
-
+  <%= raw @body %>
