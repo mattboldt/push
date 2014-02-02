@@ -6,7 +6,7 @@
     <ul class="user-nav">
       <li><%= link_to "Home", user_posts_path(current_user) %></li>
       <li><%= link_to "New Post", new_user_post_path(current_user) %></li>
-      <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+      <li><%= link_to "Settings", user_settings_path(current_user) %></li>
     </ul>
 </div>
 

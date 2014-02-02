@@ -30,11 +30,12 @@ $(document).on("ready page:load", function() {
     $(".user-nav-wrap").click(function(e) {
         e.stopPropagation();
     });
-    $(document.body).click(function() {
+    $(document.body).click(function(e) {
         $(".user-nav").removeClass("nav--active");
         $(".user-nav-wrap .nav-expand").data("status", "inactive");
     });
 
+    // while editing a post
     $(".show-options").click(function(e) {
         e.preventDefault();
         $(".advanced-fields").addClass("fields--init");
