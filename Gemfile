@@ -30,6 +30,8 @@ gem "octokit", "~> 2.0"
 # renames models
 # gem 'rename'
 
+# text editors
+gem 'ace-rails-ap'
 
 group :assets do
 

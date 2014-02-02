@@ -11,7 +11,7 @@ class AuthenticationsController < ApplicationController
 
   def create
     omniauth = request.env["omniauth.auth"]
-    # raise omniauth.to_yaml
+    raise omniauth.to_yaml
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
       authentication.update_attributes(
@@ -32,7 +32,7 @@ class AuthenticationsController < ApplicationController
       )
 
       # create new repo
-      if create_github_repo
+      if Github.new.create_github_repo(current_user)
         flash[:notice] = "Repo created."
         redirect_to user_posts_path
       else
@@ -43,14 +43,13 @@ class AuthenticationsController < ApplicationController
     else
       user = User.new
       user.apply_omniauth(omniauth)
+      user.username = omniauth['info']['nickname']
       if user.save
-        flash[:notice] = "Signed in successfully."
-        sign_in_and_redirect(:user, user)
-
         # create new repo
-        if !create_github_repo
-          flash[:notice] = "Couldn't create repo."
-        end
+        Github.new.create_github_repo(user)
+        flash[:notice] = "User created in successfully."
+        sign_in(:user, user)
+        redirect_to user_posts_path(user)
       else
         session[:omniauth] = omniauth.except('extra')
         redirect_to new_user_registration_url

@@ -1,6 +1,6 @@
 Push::Application.routes.draw do
   resources :authentications
-  devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' }
+  devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' } do get "/users/sign_out" => "/users/sessions#destroy" end
   get "posts" => "posts#index"
   root :to => "home#index"
   resources :users, :path => "/@/" do

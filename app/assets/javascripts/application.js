@@ -13,4 +13,30 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require ace/ace
 //= require_tree .
+
+$(document).on("ready page:load", function() {
+    $(".user-nav-wrap .nav-expand").click(function(e) {
+        e.stopPropagation();
+        if ($(this).data("status") === "active") {
+            $(".user-nav").removeClass("nav--active");
+            $(this).data("status", "inactive");
+        } else {
+            $(".user-nav").addClass("nav--active");
+            $(this).data("status", "active");
+        }
+    });
+    $(".user-nav-wrap").click(function(e) {
+        e.stopPropagation();
+    });
+    $(document.body).click(function() {
+        $(".user-nav").removeClass("nav--active");
+        $(".user-nav-wrap .nav-expand").data("status", "inactive");
+    });
+
+    $(".show-options").click(function(e) {
+        e.preventDefault();
+        $(".advanced-fields").addClass("fields--init");
+    })
+});

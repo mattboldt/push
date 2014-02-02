@@ -1,4 +1,4 @@
-<%= form_for [@user, @post] do |f| %>
+<%= form_for [current_user, @post] do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -17,33 +17,55 @@
   </div>
   <div class="field">
     <%= f.label :desc %><br>
-    <%= f.text_area :desc %>
-  </div>
-  <div class="field">
-    <%= f.label :slug %><br>
-    <%= f.text_field :slug %>
-  </div>
-  <div class="field">
-    <%= f.label :git_file_name %><br>
-    <%= f.text_field :git_file_name %>
-  </div>
-  <div class="field">
-    <%= f.label :git_url %><br>
-    <%= f.text_field :git_url %>
-  </div>
-  <div class="field">
-    <%= f.label :git_raw_url %><br>
-    <%= f.text_field :git_raw_url %>
+    <%= f.text_area :desc, :rows => "7" %>
   </div>
   <div class="field">
     <%= f.label :body %><br>
-    <%= f.text_area :body, :cols => "80", :rows => "10" %>
+    <%= f.text_area :body %>
+    <div id="editor"></div>
   </div>
   <div class="field">
     <%= f.label :git_commit_message %><br>
     <%= f.text_area :git_commit_message, :value => "Updating #{@post.git_file_name}", :cols => "80", :rows => "5" %>
   </div>
+  <div class="advanced-fields-wrap">
+    <p>More Options <a href="#" class="show-options">Show</a></p>
+    <div class="advanced-fields">
+      <div class="field">
+        <%= f.label :git_file_name %><br>
+        <%= f.text_field :git_file_name %>
+      </div>
+      <div class="field">
+        <%= f.label :slug %><br>
+        <%= f.text_field :slug %>
+      </div>
+      <div class="field">
+        <%= f.label :git_url %><br>
+        <%= f.text_field :git_url, :value => "https://github.com/#{current_user.username}/gitblog/blob/master/" %>
+      </div>
+      <div class="field">
+        <%= f.label :git_raw_url %><br>
+        <%= f.text_field :git_raw_url, :value => "https://raw.github.com/#{current_user.username}/gitblog/master/" %>
+      </div>
+    </div>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<script>
+  // $(document).on("ready page:load", function() {
+
+    var editor = ace.edit("editor");
+    var textarea = $('textarea#post_body').hide();
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/markdown");
+    editor.getSession().setValue(textarea.val());
+    editor.getSession().on('change', function() {
+        textarea.val(editor.getSession().getValue());
+    });
+
+// });
+</script>
