@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131021837) do
+ActiveRecord::Schema.define(version: 20140202232634) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140131021837) do
     t.string   "git_commit_message"
     t.string   "desc"
     t.string   "git_url"
+    t.string   "git_created_at"
   end
 
   create_table "users", force: true do |t|

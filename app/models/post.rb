@@ -2,7 +2,8 @@ class Post < ActiveRecord::Base
 
 
   # before_update :save_update_to_github
-  before_save :save_github_api_response, :format_post
+  before_save :save_github_api_response
+  before_create :format_post
 
   # before_save :authenticate_user!
   belongs_to :user
@@ -44,7 +45,7 @@ class Post < ActiveRecord::Base
   end
 
   def format_post
-    self.slug = to_slug(Time.now.strftime("%m-%d-%Y")) + "-" + to_slug(self.title)
+    self.slug = Time.now.strftime("%Y-%m-%d-") + to_slug(self.title)
   end
 
   def save_github_api_response

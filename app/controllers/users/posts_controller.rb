@@ -35,10 +35,11 @@ class Users::PostsController < ApplicationController
 
   # POST /posts
   def create
-    commit = Github.new.commit_to_github(post_params)
-    commit_params = {}
-    commit_params["git_file_name"] = Post.new.to_slug(post_params["created_at"]) + "/" + Post.new.to_slug(post_params["title"]) + ".md"
+    commit_params = {
+      :git_created_at => Time.now.strftime("%Y/%m/%d/")
+    }
     final_params = post_params.merge(commit_params)
+    commit = Github.new.commit_to_github(final_params)
     @post = current_user.posts.new(final_params)
     respond_to do |format|
       if @post.save
@@ -53,9 +54,9 @@ class Users::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
+    commit = Github.new.commit_to_github(post_params)
     respond_to do |format|
       if @post.update(post_params)
-        commit = Github.new.commit_to_github(post_params)
         if commit
           format.html { redirect_to user_post_path(current_user, @post), notice: 'Post was successfully updated.' }
           format.json { head :no_content }
