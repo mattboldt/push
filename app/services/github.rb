@@ -58,7 +58,7 @@ class Github
 
     def commit_to_github(post_params)
       # if file name changes, will create a new file in git.
-      file_name = post_params["git_created_at"] + Post.new.to_slug(post_params["title"]) + ".md"
+      file_name = post_params["git_file_name"]
       # set default commit message, unless there's one from the form
       commit_message = post_params['git_commit_message'] || "New commit."
       # Base64 encode your content, and create a blob.

@@ -12,6 +12,8 @@ class Post < ActiveRecord::Base
   validates :title, presence: true
   validates :desc, presence: true
 
+  validates :slug, uniqueness: true
+
 
   def to_param
     slug

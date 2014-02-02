@@ -36,7 +36,8 @@ class Users::PostsController < ApplicationController
   # POST /posts
   def create
     commit_params = {
-      :git_created_at => Time.now.strftime("%Y/%m/%d/")
+      :git_created_at => Time.now.strftime("%Y/%m/%d/"),
+      :git_file_name => Time.now.strftime("%Y/%m/%d/") + Post.new.to_slug(post_params["title"]) + ".md"
     }
     final_params = post_params.merge(commit_params)
     commit = Github.new.commit_to_github(final_params)
@@ -87,7 +88,7 @@ class Users::PostsController < ApplicationController
 
     # strong params
     def post_params
-      params.require(:post).permit(:title, :desc, :slug, :git_url, :git_raw_url, :user_id, :body, :git_file_name, :git_commit_message)
+      params.require(:post).permit(:title, :desc, :slug, :git_url, :git_raw_url, :user_id, :body, :git_file_name, :git_commit_message, :git_created_at)
     end
 
     # GitHub Repo Connectivity
