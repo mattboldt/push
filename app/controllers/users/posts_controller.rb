@@ -37,9 +37,7 @@ class Users::PostsController < ApplicationController
   def create
     commit = Github.new.commit_to_github(post_params)
     commit_params = {}
-    if post_params["git_file_name"].empty?
-      commit_params["git_file_name"] = Post.new.to_slug(post_params["title"]) + ".md"
-    end
+    commit_params["git_file_name"] = Post.new.to_slug(post_params["created_at"]) + "/" + Post.new.to_slug(post_params["title"]) + ".md"
     final_params = post_params.merge(commit_params)
     @post = current_user.posts.new(final_params)
     respond_to do |format|

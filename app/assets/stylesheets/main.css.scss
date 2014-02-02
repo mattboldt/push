@@ -1,6 +1,9 @@
 @import "mixins";
 @import "pygments";
 // @import 'hallo_rails';
+
+$link-color:#6887AD;
+
 html{
 	height:100%;
 	margin:0;
@@ -14,7 +17,10 @@ body{
 
 a{
 	text-decoration: none;
-	color:#6887AD;
+	color:$link-color;
+	&:hover{
+		border-bottom:$link-color .10em solid;
+	}
 }
 
 p{
