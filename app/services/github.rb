@@ -86,6 +86,15 @@ class Github
       return @@github.commit(@@repo, sha_latest_commit)
     end
 
+    # removed due to potential API limitation. Needs to be cached in redis.
+    # def history(current_user, user_id)
+    #   # grab token from OAuth in (user) authentications table
+    #   token = current_user.authentications.find(:first, :conditions => { :provider => 'github' }).token
+    #   # init Octokit Client w/ OAuth
+    #   octokit = Octokit::Client.new(:access_token => token)
+    #   octokit.commits(user_id + "/gitblog/2014/02/25/organizing-css-and-sass-in-rails.md")
+    # end
+
   end
 
 

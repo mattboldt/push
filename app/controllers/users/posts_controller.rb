@@ -16,9 +16,10 @@ class Users::PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    # file = open(@post.git_url) { |f| f.read }
-    # @file = render_markdown(file)
-    @body = render_markdown(@post.body)
+    @user = User.find_by_username(params[:user_id])
+    if @post
+      @body = render_markdown(@post.body)
+    end
   end
 
 
@@ -29,6 +30,7 @@ class Users::PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    @user = current_user
       # file = open(@post.git_url) { |f| f.read }
       # @file = file
   end
@@ -55,7 +57,12 @@ class Users::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    commit = Github.new.commit_to_github(post_params)
+    commit_params = {
+      :git_created_at => @post.git_created_at,
+      :git_file_name => @post.git_file_name
+    }
+    final_params = post_params.merge(commit_params)
+    commit = Github.new.commit_to_github(final_params)
     respond_to do |format|
       if @post.update(post_params)
         if commit
