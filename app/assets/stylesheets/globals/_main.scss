@@ -1,0 +1,45 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600);
+
+@import "base/grid";
+
+html{
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
+body{
+	background: #fff;
+	font-family: "Source Sans Pro";
+}
+
+a{
+	text-decoration: none;
+	color:$link-color;
+	&:hover{
+		border-bottom:$link-color .10em solid;
+	}
+}
+
+p{
+	line-height: 1.75em;
+}
+
+.wrap{
+	margin:1.5em auto;
+	max-width:800px;
+}
+	.wrap-wide{
+		margin:1.5em auto;
+		max-width:2000px;
+	}
+
+header{
+	height:100%;
+	h1{
+		margin:30% auto 0;
+		text-align: center;
+		font-size: 5em;
+		font-weight: 400;
+	}
+}

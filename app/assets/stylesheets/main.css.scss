@@ -1,72 +1,21 @@
-@import "mixins";
-@import "pygments";
-// @import 'hallo_rails';
 
-$link-color:#6887AD;
+// Base assets
+@import "base/mixins";
+@import "base/variables";
+@import "base/normalize";
 
-html{
-	height:100%;
-	margin:0;
-	padding:0;
-}
+// Global site styles
+@import "globals/main";
+@import "globals/nav";
+@import "globals/buttons";
 
-body{
-	background: #fff;
-	font-family: "Proxima Nova";
-}
+// Plugins
+@import "plugins/pygments";
 
-a{
-	text-decoration: none;
-	color:$link-color;
-	&:hover{
-		border-bottom:$link-color .10em solid;
-	}
-}
+// Unique sites sections
+@import "sections/posts";
+@import "sections/post_editor";
 
-p{
-	line-height: 1.75em;
-}
 
-.wrap{
-	margin:1.5em auto;
-	max-width:800px;
-}
 
-header{
-	height:100%;
-	h1{
-		margin:30% auto 0;
-		text-align: center;
-		font-size: 5em;
-		font-weight: 400;
-	}
-}
-@import "nav";
 
-#editor{
-	display:block !important;
-	position: relative;
-	max-width:900px;
-	min-height:500px;
-}
-
-.advanced-fields{
-	display: none;
-	padding:.5em;
-	height:0;
-	@include transition(height, .25s, ease-in-out);
-}
-	.fields--init{
-		display: block;
-		height:100%;
-	}
-
-input[type=text]{
-	width:100%;
-	padding:.25em;
-	font-size: 1em;
-}
-textarea{
-	width:100%;
-	max-width: 100%;
-}

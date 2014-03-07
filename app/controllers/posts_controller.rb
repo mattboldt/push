@@ -2,7 +2,7 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    @posts = Post.paginate(:page => params[:page], :per_page => 15)
     # @posts = Post.where(:user_id => params[:id]).first
   end
 

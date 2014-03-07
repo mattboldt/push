@@ -1,12 +1,16 @@
 Push::Application.routes.draw do
   resources :authentications
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' }
-  get "posts" => "posts#index"
-  root :to => "home#index"
+  # get "posts" => "posts#index"
+  get '/page/:page', :controller => 'posts', :action => 'index'
+  root :to => "posts#index"
   resources :users, :path => "/@/" do
     get "settings/" => "users/settings#index"
-    resources :posts, :controller => "users/posts", :path => "/"
+    resources :posts, :controller => "users/posts", :path => "/" do
+    end
   end
+  post "/post/preview", to: "users/posts#preview"
+  patch "/post/preview", to: "users/posts#preview"
 
   get "/auth/:provider/callback" => 'authentications#create'
   get "/auth/failure" => "authentications#failure"

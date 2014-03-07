@@ -1,67 +1,163 @@
 <%= form_for [current_user, @post] do |f| %>
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-      <ul>
-      <% @post.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+  <div class="wrap">
+
+    <% if @post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.text_field :title, placeholder: "Title", class: "input input-title" %>
+    </div>
+    <div class="field">
+      <%= f.text_area :desc, :rows => "5", placeholder: "Description", class: "input" %>
+    </div>
+
+  </div>
+
+
+  <div class="wrap-wide">
+    <div class="grid grid-padded">
+      <div class="col">
+        <%= f.text_area :body %>
+        <div id="editor"></div>
+      </div>
+      <div class="col">
+        <div id="md-preview" class="md-preview">
+          <div class="md-preview-placeholder">
+            Live Preview; Start Typing!
+          </div>
+          <div class="md-preview-title">
+          </div>
+          <div class="md-preview-desc">
+          </div>
+          <div class="md-preview-body">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="wrap">
+
+    <div class="field">
+      <%= f.label :git_commit_message %><br>
+      <% if action_name == "new" %>
+        <%= f.text_area :git_commit_message, :value => "Creating a new post", :cols => "80", :rows => "5", class: "input" %>
+      <% else %>
+        <%= f.text_area :git_commit_message, :value => "Updating #{@post.git_file_name}", :cols => "80", :rows => "5", class: "input" %>
       <% end %>
-      </ul>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :desc %><br>
-    <%= f.text_area :desc, :rows => "7" %>
-  </div>
-  <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
-    <div id="editor"></div>
-  </div>
-  <div class="field">
-    <%= f.label :git_commit_message %><br>
-    <%= f.text_area :git_commit_message, :value => "Updating #{@post.git_file_name}", :cols => "80", :rows => "5" %>
-  </div>
-  <div class="advanced-fields-wrap">
-    <p>More Options <a href="#" class="show-options">Show</a></p>
-    <div class="advanced-fields">
-      <div class="field">
-        <%= f.label :slug %><br>
-        <%= f.text_field :slug %>
-      </div>
-      <div class="field">
-        <%= f.label :git_url %><br>
-        <%= f.text_field :git_url, :value => "https://github.com/#{current_user.username}/gitblog/blob/master/" %>
-      </div>
-      <div class="field">
-        <%= f.label :git_raw_url %><br>
-        <%= f.text_field :git_raw_url, :value => "https://raw.github.com/#{current_user.username}/gitblog/master/" %>
+    <div class="advanced-fields-wrap">
+      <p>More Options <a href="#" class="show-options">Show</a></p>
+      <div class="advanced-fields">
+        <div class="field">
+          <%= f.label :slug %><br>
+          <%= f.text_field :slug %>
+        </div>
+        <div class="field">
+          <%= f.label :git_url %><br>
+          <%= f.text_field :git_url, :value => "https://github.com/#{current_user.username}/gitblog/blob/master/" %>
+        </div>
+        <div class="field">
+          <%= f.label :git_raw_url %><br>
+          <%= f.text_field :git_raw_url, :value => "https://raw.github.com/#{current_user.username}/gitblog/master/" %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="actions">
+      <%= f.submit :value => "Push", class: "btn btn-submit" %>
+    </div>
   </div>
 <% end %>
 
 
 <script>
-  // $(document).on("ready page:load", function() {
 
-    var editor = ace.edit("editor");
-    var textarea = $('textarea#post_body').hide();
-    editor.setTheme("ace/theme/twilight");
-    editor.getSession().setMode("ace/mode/markdown");
-    editor.getSession().setValue(textarea.val());
-    editor.getSession().on('change', function() {
-        textarea.val(editor.getSession().getValue());
+  var editor = ace.edit("editor");
+  var textarea = $('textarea#post_body').hide();
+  editor.setTheme("ace/theme/twilight");
+  editor.getSession().setMode("ace/mode/markdown");
+  editor.getSession().setValue(textarea.val());
+  editor.getSession().setUseWrapMode(true);
+  editor.getSession().on('change', function() {
+    textarea.val(editor.getSession().getValue());
+  });
+
+  $(function(){
+    // Form preview ajax
+    var form = $(".edit_post, .new_post");
+    var $editor = $('#editor');
+
+    if (editor.getSession().getValue().length > 0){
+      render_preview(form);
+    }
+
+    // Typing preview logic
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 1000;  //time in ms
+
+    //on keyup, start the countdown
+    $editor.on("keyup", function(){
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
     });
 
-// });
+    //on keydown, clear the countdown
+    $editor.keydown(function(){
+        clearTimeout(typingTimer);
+    });
+
+    //user is "finished typing," do something
+    function doneTyping () {
+      if (editor.getSession().getValue().length > 0){
+        log("previewing...")
+        render_preview(form);
+      } else{
+        $(".md-preview-placeholder").show();
+      }
+    }
+
+    $("#post_title").on("keyup", function(){
+      $(".md-preview-title").html($(this).val());
+    });
+    $("#post_desc").on("keyup", function(){
+      $(".md-preview-desc").html($(this).val());
+    });
+
+  });
+
+
+
+
+
+  function render_preview(form){
+    $.ajax({
+      type: "POST",
+      url: "<%= post_preview_path %>",
+      headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+      data: $(form).serialize(),
+      dataType: "html",
+      success: function(data){
+          $(".md-preview-placeholder").hide();
+          $(".md-preview-body").html(data);
+        }
+    });
+  }
+
+  function log(string){
+    console.log(string);
+  }
+
+
 </script>

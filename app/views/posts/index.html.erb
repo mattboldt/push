@@ -3,4 +3,7 @@
   <% for post in @posts %>
     <h1><%= link_to post.title, user_post_path(post.user, post) %> - <%= link_to post.user.username, user_posts_path(post.user) %></h1>
     <p><%= post.desc %></p>
+    <p>About <%= post.body.split.size %> words</p>
   <% end %>
+
+  <%= will_paginate @posts %>

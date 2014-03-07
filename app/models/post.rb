@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: posts
+#
+#  id                 :integer          not null, primary key
+#  title              :string(255)
+#  slug               :string(255)
+#  git_raw_url        :string(255)
+#  user_id            :integer
+#  body               :text
+#  created_at         :datetime
+#  updated_at         :datetime
+#  git_file_name      :string(255)
+#  git_commit_message :string(255)
+#  desc               :string(255)
+#  git_url            :string(255)
+#  git_created_at     :string(255)
+#
+
 class Post < ActiveRecord::Base
 
 

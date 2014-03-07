@@ -1,10 +1,11 @@
 .user-nav-wrap{
-	position: absolute;
+	position: fixed;
 	top:0;
 	right:0;
 	bottom:0;
 	width:200px;
 	overflow: hidden;
+	z-index:999999;
 }
 .user-nav{
 	margin:0;
@@ -46,7 +47,7 @@
 	width:80px;
 	height:60px;
 	overflow: hidden;
-	z-index: 9;
+	z-index: 9999999;
 	img{
 		float:right;
 		width:75%;

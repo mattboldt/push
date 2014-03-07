@@ -8,6 +8,9 @@ group :development do
   gem 'sqlite3'
   gem "nifty-generators"
   gem 'capistrano-rails', '~> 1.0.0'
+  gem 'populator'
+  gem 'faker'
+  gem 'annotate', ">=2.6.0"
 end
 
 group :production do
@@ -16,11 +19,13 @@ group :production do
 end
 
 
+gem 'will_paginate'
+
 gem 'devise'
 gem 'omniauth-github'
 
 # markdown / syntax highlighting
-gem "pygments.rb"
+gem 'pygments.rb'
 gem 'redcarpet'
 gem 'albino'
 gem 'nokogiri'

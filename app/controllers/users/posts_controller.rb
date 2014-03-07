@@ -26,10 +26,12 @@ class Users::PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = current_user.posts.new
+    render layout: 'editor'
   end
 
   # GET /posts/1/edit
   def edit
+    render layout: 'editor'
     @user = current_user
       # file = open(@post.git_url) { |f| f.read }
       # @file = file
@@ -82,6 +84,24 @@ class Users::PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to posts_url }
       format.json { head :no_content }
+    end
+  end
+
+  def preview
+    require 'redcarpet'
+    preview = params[:post][:body]
+    # renderer = Redcarpet::Render::HTML.new(:filter_html => true, :hard_wrap => true, :autolink => true)
+    renderer = PygmentizeHTML
+    extensions = {:autolink => true, :hard_wrap => true, :space_after_headers => true, :highlight => true, :tables => true, :fenced_code_blocks => true, :gh_blockcode => true}
+    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
+    @preview = redcarpet.render preview
+    # respond_to do |format|
+    #   format.json { render @preview }
+    #   format.html { render @preview }
+    #   format.js { render @preview }
+    # end
+    respond_to do |format|
+      format.html { render :text => @preview }
     end
   end
 
