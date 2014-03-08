@@ -56,6 +56,10 @@ class Github
       commit_to_github(@repo, post_params)
     end
 
+    def pull_from_github(post_params)
+      Octokit.contents("mattboldt/gitblog", :path => '2014/02/25/organizing-css-and-sass-in-rails.md').to_json.to_json
+    end
+
     def commit_to_github(post_params)
       # if file name changes, will create a new file in git.
       file_name = post_params["git_file_name"]

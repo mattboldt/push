@@ -1,17 +1,32 @@
 Push::Application.routes.draw do
+
   resources :authentications
+
+  # Devise Authentication
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' }
-  # get "posts" => "posts#index"
+
+
+  # Index of posts & paginated posts
   get '/page/:page', :controller => 'posts', :action => 'index'
   root :to => "posts#index"
+
+  # Usernames under /@/
   resources :users, :path => "/@/" do
+    # User settings
     get "settings/" => "users/settings#index"
+
+    # Main Posts
     resources :posts, :controller => "users/posts", :path => "/" do
+      post "pull", :controller => "users/posts", :action => "pull"
     end
+
   end
+
+  # Markdown preview post request
   post "/post/preview", to: "users/posts#preview"
   patch "/post/preview", to: "users/posts#preview"
 
+  # Omniauth w/ Github
   get "/auth/:provider/callback" => 'authentications#create'
   get "/auth/failure" => "authentications#failure"
 

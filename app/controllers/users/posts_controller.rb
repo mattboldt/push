@@ -22,7 +22,6 @@ class Users::PostsController < ApplicationController
     end
   end
 
-
   # GET /posts/new
   def new
     @post = current_user.posts.new
@@ -35,6 +34,11 @@ class Users::PostsController < ApplicationController
     @user = current_user
       # file = open(@post.git_url) { |f| f.read }
       # @file = file
+  end
+
+  # Update from GitHub
+  def pull
+    render json: Github.new.pull_from_github(params)
   end
 
   # POST /posts

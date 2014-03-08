@@ -1,6 +1,9 @@
+
+
 <%= form_for [current_user, @post] do |f| %>
 
   <div class="wrap">
+    <a href="#" class="btn btn-submit js-git-pull">Pull Changes</a>
 
     <% if @post.errors.any? %>
       <div id="error_explanation">
@@ -125,6 +128,7 @@
         render_preview(form);
       } else{
         $(".md-preview-placeholder").show();
+        $(".md-preview-body").html("");
       }
     }
 
@@ -133,6 +137,30 @@
     });
     $("#post_desc").on("keyup", function(){
       $(".md-preview-desc").html($(this).val());
+    });
+
+    $.ajax({
+      url: "<%= user_post_pull_path(current_user, @post) %>",
+      type: "POST",
+      context: document.body,
+      success: function(data){
+        var git_pulled_content = atob(JSON.parse(data)["content"]);
+        // if (git_pulled_content !== textarea.val()){
+          $(textarea).before("<textarea id=\"git-pull-updates\" style=\"display:none;\">" + git_pulled_content + "</textarea>");
+        // }
+      }
+    });
+
+    // Git pull
+    $(".js-git-pull").click(function(){
+      var pull_confirm = confirm("You sure? Pulling the latest change from the repo will overwrite your current version.");
+      if (pull_confirm && $("#git-pull-updates").val() !== ""){
+        $(this).html("Pulling...");
+        editor.getSession().setValue($("#git-pull-updates").val());
+        render_preview(form);
+        $(".js-git-pull").html("Pull Changes");
+      }
+
     });
 
   });
@@ -158,6 +186,7 @@
   function log(string){
     console.log(string);
   }
+
 
 
 </script>

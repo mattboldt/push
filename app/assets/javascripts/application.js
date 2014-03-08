@@ -35,9 +35,9 @@ $(document).on("ready page:load", function() {
         $(".user-nav-wrap .nav-expand").data("status", "inactive");
     });
 
-    // while editing a post
-    $(".show-options").click(function(e) {
+    $("a[href=#]").click(function(e){
         e.preventDefault();
-        $(".advanced-fields").addClass("fields--init");
-    })
+    });
+
+
 });
