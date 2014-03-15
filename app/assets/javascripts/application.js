@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require ace/ace
+//= require ace/theme-twilight.js
+//= require ace/mode-markdown.js
 //= require_tree .
 
 $(document).on("ready page:load", function() {

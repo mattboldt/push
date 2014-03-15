@@ -91,7 +91,6 @@
   var textarea = $('textarea#post_body').hide();
   editor.setTheme("ace/theme/twilight");
   editor.getSession().setMode("ace/mode/markdown");
-  editor.getSession().setUseWorker(false);
   editor.getSession().setValue(textarea.val());
   editor.getSession().setUseWrapMode(true);
   editor.getSession().on('change', function() {
