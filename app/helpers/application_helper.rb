@@ -7,6 +7,23 @@ module ApplicationHelper
     :user
   end
 
+  def user_post_compliment
+    compliments = [
+      "wonderful",
+      "magnificent",
+      "out of this world",
+      "genuis",
+      "very talented",
+      "prolific"
+    ]
+    "the " + compliments[rand(0..5)].to_s
+  end
+
+  def post_timestamp(date)
+    date = Time.new
+    date.strftime("%A #{date.day.ordinalize}, %Y")
+  end
+
   def resource
     @resource ||= User.new
   end

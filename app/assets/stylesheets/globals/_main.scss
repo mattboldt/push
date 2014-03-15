@@ -1,4 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600);
+// @import url(http://fonts.googleapis.com/css?family=Vollkorn);
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
 
 html{
 	height:100%;
@@ -40,4 +42,11 @@ header{
 		font-size: 5em;
 		font-weight: 400;
 	}
+}
+
+.page-title{
+  font-size: 4.5em;
+  font-weight: 200;
+  color:#CCC;
+  text-align: center;
 }

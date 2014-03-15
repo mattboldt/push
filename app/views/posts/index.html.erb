@@ -1,9 +1,29 @@
-<h1>All Posts</h1>
+<h1 class="page-title">Exploring Push</h1>
 
   <% for post in @posts %>
-    <h1><%= link_to post.title, user_post_path(post.user, post) %> - <%= link_to post.user.username, user_posts_path(post.user) %></h1>
-    <p><%= post.desc %></p>
-    <p>About <%= post.body.split.size %> words</p>
+	  <article class="post-index">
+	  	<div class="media">
+		  	<div class="img">
+			  	<div class="post-user-avi">
+			  		<%= link_to user_posts_path(post.user) do %>
+			  			<%= image_tag avatar_url(post.user) %>
+			  		<% end %>
+			  	</div>
+			  	<% if post.user == current_user %>
+		  			<span class="post-current-user">That's you!</span>
+		  		<% end %>
+		  	</div>
+
+			<div class="desc">
+				<span class="post-timestamp"><%= post_timestamp(post.created_at) %></span>
+			    <h2><%= link_to post.title, user_post_path(post.user, post) %></h2>
+
+			    <p><%= post.desc %></p>
+
+			    <small>By <%= user_post_compliment %> <%= link_to post.user.username, user_posts_path(post.user) %>. About <%= post.body.split.size %> words.</small>
+			</div>
+		</div>
+	  </article>
   <% end %>
 
   <%= will_paginate @posts %>

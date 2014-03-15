@@ -132,6 +132,9 @@
       }
     }
 
+    // Populate the live preview
+    $(".md-preview-title").html($("#post_title").val());
+    $(".md-preview-desc").html($("#post_desc").val());
     $("#post_title").on("keyup", function(){
       $(".md-preview-title").html($(this).val());
     });
@@ -149,6 +152,7 @@
           $(textarea).before("<textarea id=\"git-pull-updates\" style=\"display:none;\">" + git_pulled_content + "</textarea>");
         // }
       }
+
     });
 
     // Git pull

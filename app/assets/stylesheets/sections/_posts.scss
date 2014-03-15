@@ -1,0 +1,77 @@
+
+.media{
+  display: table;
+  width:100%;
+  .img, .desc{
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+.post-index{
+  position: relative;
+  width:100%;
+  margin:0 auto 1em 0;
+  padding:0 0 1em 0;
+  border-bottom:#f8f8f8 2px solid;
+  .img{
+    width:20%;
+  }
+  .desc{
+    width:80%;
+  }
+  h2{
+    margin:0 auto .25em;
+    font-size: 2em;
+    a{
+      color:#222;
+      &:hover{
+        color:$link-color;
+        border:0;
+      }
+    }
+  }
+  .post-timestamp{
+    float:right;
+    font-size: .85em;
+    font-weight: 200;
+    color:#999;
+    vertical-align: middle;
+  }
+  p{
+    margin:0 0 .5em 0;
+    font-family: "Source Code Pro";
+    font-size: 1.25em;
+    letter-spacing: -.05em;
+    color:#555;
+  }
+  small{
+    font-style: italic;
+    color:#999;
+  }
+  .post-user-avi{
+    margin:0 auto 1em;
+    width:55px;
+    height:55px;
+    border-radius: 100%;
+    overflow: hidden;
+    img{
+
+      width: 100%;
+      border:0;
+    }
+  }
+  .post-current-user{
+    display: block;
+    width:100%;
+    font-size: .75em;
+    font-style: italic;
+    color:#999;
+    text-align: center;
+  }
+}
+
+
+.post-show{
+  font-size: 1.25em;
+}
