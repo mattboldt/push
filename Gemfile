@@ -7,10 +7,18 @@ group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   gem "nifty-generators"
-  gem 'capistrano-rails', '~> 1.0.0'
   gem 'populator'
   gem 'faker'
   gem 'annotate', ">=2.6.0"
+
+  # Use Capistrano for deployment
+  gem 'capistrano'
+
+  # integrate bundler with capistrano
+  gem 'capistrano-bundler'
+
+  # if you are using RBENV
+  gem 'capistrano-rbenv', "~> 2.0"
 end
 
 group :production do
@@ -78,9 +86,6 @@ end
 
 # Use unicorn as the app server
 gem 'unicorn'
-
-# Use Capistrano for deployment
-gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
