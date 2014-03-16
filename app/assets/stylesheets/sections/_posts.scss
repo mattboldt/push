@@ -74,4 +74,43 @@
 
 .post-show{
   font-size: 1.25em;
+  h1{
+    margin:.25em auto;
+    font-size: 3em;
+  }
+}
+
+.post-show-nav{
+  margin:0 auto 1em;
+  padding:.5em;
+  width:100%;
+  background-color:rgb(11, 121, 229);
+  border-radius:.25em;
+  ul{
+    margin: 0;
+    padding: 0;
+    display: table;
+    list-style: none;
+  }
+  li{
+    display: table-cell;
+    margin:0;
+  }
+  a{
+    display:block;
+    margin:0 .5em 0 0;
+    padding:.5em;
+    color:#fff;
+    text-align: center;
+    text-shadow:rgba(0,0,0,0.4) 0px -1px 0px;
+    border-radius:.15em;
+    &:hover{
+      color:#222;
+      text-shadow:#fff 0px 1px 0px;
+      background-color:#fff;
+      background-image:-webkit-linear-gradient(#fff, #f8f8f8);
+      border:0;
+      // box-shadow:#EEE 0px 0px 0px 1px;
+    }
+  }
 }

@@ -1,3 +1,17 @@
+
+.nav-logo{
+	margin:0 1em;
+	display: block;
+	float: left;
+	width:50px;
+	height:50px;
+	-webkit-transition:all .15s ease-in-out;
+	&:hover{
+		border:0;
+		-webkit-transform:rotate(-45deg);
+	}
+}
+
 .user-nav-wrap{
 	position: fixed;
 	top:0;

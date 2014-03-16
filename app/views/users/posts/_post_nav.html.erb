@@ -1,0 +1,26 @@
+<nav class="post-show-nav">
+	<ul>
+		<li>
+			<%= link_to @post.git_url do %>
+				<i class="fa fa-github"></i> Contribute on GitHub
+			<% end %>
+		</li>
+		<li>
+			<%= link_to @post.git_url.gsub("blob", "commits") do %>
+				<i class="fa fa-code-fork"></i> View Commits
+			<% end %>
+		</li>
+		<% if user_signed_in? && is_owner? %>
+		<li>
+			<%= link_to edit_user_post_path(current_user, @post) do %>
+				<i class="fa fa-pencil"></i> Edit
+			<% end %>
+		</li>
+		<li>
+			<%= link_to user_post_path(@post.user, @post), method: "destroy", confirm: "You sure? This file will also be removed from your GitHub repo." do %>
+			<i class="fa fa-minus"></i> Destroy
+			<% end %>
+		</li>
+		<% end %>
+	</ul>
+</nav>
