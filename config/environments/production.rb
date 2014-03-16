@@ -79,4 +79,7 @@ Push::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.client_id = "c39633bffd86eff124e3"
+  config.client_secret = "e9fc594d4067a983645d961e99a1f489239d37bb"
 end

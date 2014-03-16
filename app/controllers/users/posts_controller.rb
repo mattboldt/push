@@ -53,7 +53,7 @@ class Users::PostsController < ApplicationController
       if @post.save
         commit = Github.new.commit_to_github(final_params)
         if commit
-          format.html { redirect_to user_posts_path(current_user, @post), notice: 'Post was successfully created.' }
+          format.html { redirect_to user_post_path(current_user, @post), notice: 'Post was successfully created.' }
           format.json { render action: 'show', status: :created, location: @post }
         else
           format.html { render action: 'new' }

@@ -1,5 +1,10 @@
 Push::Application.routes.draw do
 
+  # redirect traffic to root
+  constraints subdomain: 'www' do
+    get ':any', to: redirect(subdomain: nil, path: '/%{any}'), any: /.*/
+  end
+
   resources :authentications
 
   # Devise Authentication

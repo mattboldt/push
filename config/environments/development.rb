@@ -27,4 +27,7 @@ Push::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.client_id = "4aa1b7e1712747605cfb"
+  config.client_secret = "a008e6f55ca6b96687141b7ed799475d21fd8118"
 end
