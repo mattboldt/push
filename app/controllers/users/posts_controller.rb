@@ -48,15 +48,17 @@ class Users::PostsController < ApplicationController
       :git_file_name => Time.now.strftime("%Y/%m/%d/") + Post.new.to_slug(post_params["title"]) + ".md"
     }
     final_params = post_params.merge(commit_params)
-    commit = Github.new.commit_to_github(final_params)
     @post = current_user.posts.new(final_params)
     respond_to do |format|
       if @post.save
-        format.html { redirect_to user_posts_path(current_user, @post), notice: 'Post was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @post }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        commit = Github.new.commit_to_github(final_params)
+        if commit
+          format.html { redirect_to user_posts_path(current_user, @post), notice: 'Post was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @post }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @post.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -68,16 +70,16 @@ class Users::PostsController < ApplicationController
       :git_file_name => @post.git_file_name
     }
     final_params = post_params.merge(commit_params)
-    commit = Github.new.commit_to_github(final_params)
     respond_to do |format|
       if @post.update(post_params)
+        commit = Github.new.commit_to_github(final_params)
         if commit
           format.html { redirect_to user_post_path(current_user, @post), notice: 'Post was successfully updated.' }
           format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @post.errors, status: :unprocessable_entity }
         end
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
   end
