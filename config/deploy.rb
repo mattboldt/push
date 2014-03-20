@@ -6,7 +6,7 @@ set :deploy_user, 'deploy'
 
 set :scm, :git
 # set :repo_url, 'git@github.com:mattboldt/push.git'
-set :repo_url, 'https://github.com/mattboldt/push.git'
+set :repo_url, 'git@github.com:mattboldt/push.git'
 
 # setup rvm.
 set :rbenv_type, :system
@@ -27,8 +27,6 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # what specs should be run before deployment is allowed to
 # continue, see lib/capistrano/tasks/run_tests.cap
 set :tests, []
-
-set :use_sudo, false
 
 # which config files should be copied by deploy:setup_config
 # see documentation in lib/capistrano/tasks/setup_config.cap
@@ -78,6 +76,7 @@ set(:symlinks, [
 # and when for `cap stage deploy`
 
 namespace :deploy do
+  set :use_sudo, false
   # make sure we're deploying what we think we're deploying
   before :deploy, "deploy:check_revision"
   # only allow a deploy with passing tests to deployed
