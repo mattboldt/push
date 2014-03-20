@@ -53,20 +53,20 @@ set(:executable_config_files, %w(
 set(:symlinks, [
   {
     source: "nginx.conf",
-    link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
+    link: "/etc/nginx/sites-enabled/#{fetch(:application)}"
   },
   {
     source: "unicorn_init.sh",
-    link: "/etc/init.d/unicorn_#{fetch(:full_app_name)}"
+    link: "/etc/init.d/unicorn_#{fetch(:application)}"
   },
   {
     source: "log_rotation",
-   link: "/etc/logrotate.d/#{fetch(:full_app_name)}"
+   link: "/etc/logrotate.d/#{fetch(:application)}"
   },
-  {
-    source: "monit",
-    link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
-  }
+  # {
+  #   source: "monit",
+  #   link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
+  # }
 ])
 
 
@@ -76,7 +76,6 @@ set(:symlinks, [
 # and when for `cap stage deploy`
 
 namespace :deploy do
-  set :use_sudo, false
   # make sure we're deploying what we think we're deploying
   before :deploy, "deploy:check_revision"
   # only allow a deploy with passing tests to deployed
