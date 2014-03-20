@@ -28,6 +28,8 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # continue, see lib/capistrano/tasks/run_tests.cap
 set :tests, []
 
+set :use_sudo, false
+
 # which config files should be copied by deploy:setup_config
 # see documentation in lib/capistrano/tasks/setup_config.cap
 # for details of operations
