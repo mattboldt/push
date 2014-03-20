@@ -14,6 +14,9 @@ group :development do
   # Use Capistrano for deployment
   gem 'capistrano'
 
+  # rails specific capistrano funcitons
+  gem 'capistrano-rails', '~> 1.1.0'
+
   # integrate bundler with capistrano
   gem 'capistrano-bundler'
 
