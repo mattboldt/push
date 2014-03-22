@@ -5,13 +5,11 @@ set :application, 'push'
 set :deploy_user, 'deploy'
 
 set :scm, :git
-# set :repo_url, 'git@github.com:mattboldt/push.git'
 set :repo_url, 'git@github.com:mattboldt/push.git'
 
 # setup rvm.
 set :rbenv_type, :system
-set :rbenv_ruby, '2.1.1'
-set :rbenv_custom_path, '/home/deploy/.rbenv'
+set :rbenv_ruby, '1.9.3-p286'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 
@@ -53,20 +51,20 @@ set(:executable_config_files, %w(
 set(:symlinks, [
   {
     source: "nginx.conf",
-    link: "/etc/nginx/sites-enabled/#{fetch(:application)}"
+    link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
   },
   {
     source: "unicorn_init.sh",
-    link: "/etc/init.d/unicorn_#{fetch(:application)}"
+    link: "/etc/init.d/unicorn_#{fetch(:full_app_name)}"
   },
   {
     source: "log_rotation",
-   link: "/etc/logrotate.d/#{fetch(:application)}"
+   link: "/etc/logrotate.d/#{fetch(:full_app_name)}"
+  },
+  {
+    source: "monit",
+    link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
   }
-  # {
-  #   source: "monit",
-  #   link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
-  # }
 ])
 
 
