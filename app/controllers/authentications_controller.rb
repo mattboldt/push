@@ -15,6 +15,7 @@ class AuthenticationsController < ApplicationController
     if authentication
       authentication.update_attributes(
         :username => omniauth['info']['nickname'],
+        :email => omniauth['info']['email'],
         :provider => omniauth['provider'],
         :uid => omniauth['uid'],
         :token => omniauth['credentials']['token']
@@ -25,6 +26,7 @@ class AuthenticationsController < ApplicationController
     elsif current_user
       current_user.authentications.create!(
         :username => omniauth['info']['nickname'],
+        :email => omniauth['info']['email'],
         :provider => omniauth['provider'],
         :uid => omniauth['uid'],
         :token => omniauth['credentials']['token']
@@ -43,6 +45,7 @@ class AuthenticationsController < ApplicationController
       user = User.new
       user.apply_omniauth(omniauth)
       user.username = omniauth['info']['nickname']
+      user.email = omniauth['info']['email']
       if user.save
         # create new repo
         Github.new.create_github_repo(user)
