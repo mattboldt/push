@@ -54,7 +54,7 @@ class AuthenticationsController < ApplicationController
         redirect_to user_posts_path(user)
       else
         session[:omniauth] = omniauth.except('extra')
-        redirect_to new_user_registration_url
+        redirect_to root_path
       end
     end
     # raise omniauth.to_yaml
