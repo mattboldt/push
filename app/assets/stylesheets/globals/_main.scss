@@ -1,7 +1,6 @@
-// @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600);
+
 // @import url(http://fonts.googleapis.com/css?family=Vollkorn);
-@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,700);
-@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
+@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,700|Source+Sans+Pro:300,400|Source+Code+Pro);
 
 * {
   box-sizing:border-box;
@@ -23,10 +22,9 @@ html{
 
 body{
   color:#e7dcd9;
-  text-shadow:rgba(0,0,0,1) 0px -1px 0px;
+  // text-shadow:rgba(0,0,0,1) 0px -1px 0px;
   background: rgb(17, 17, 17);
-  font-family: "Noto Serif";
-  // font-family: "Source Sans Pro";
+  font-family: "Noto Serif", serif;
 }
 
 a{
@@ -39,11 +37,13 @@ a{
 
 p{
   line-height: 1.75em;
+  font-size: 19px;
   color:#beb5b2;
 }
 
 h1, h2, h3{
   margin:0 auto .67em;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 
