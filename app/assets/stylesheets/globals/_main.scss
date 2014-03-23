@@ -10,6 +10,10 @@
   -o-box-sizing:border-box;
 }
 
+*::selection{
+  background-color:rgba(2,170,211,0.2);
+}
+
 html{
   height:100%;
   margin:0;
@@ -17,7 +21,9 @@ html{
 }
 
 body{
-  background: #fff;
+  color:#999;
+  text-shadow:rgba(0,0,0,1) 0px -1px 0px;
+  background: #2a2a2a;
   font-family: "Source Sans Pro";
 }
 

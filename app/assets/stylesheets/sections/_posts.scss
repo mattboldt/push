@@ -13,7 +13,7 @@
   width:100%;
   margin:0 auto 1em 0;
   padding:0 0 1em 0;
-  border-bottom:#f8f8f8 2px solid;
+  border-bottom:rgba(255,255,255,0.1) 2px solid;
   .img{
     width:20%;
   }
@@ -24,7 +24,6 @@
     margin:0 auto .25em;
     font-size: 2em;
     a{
-      color:#222;
       &:hover{
         color:$link-color;
         border:0;
@@ -43,7 +42,6 @@
     font-family: "Source Code Pro";
     font-size: 1.25em;
     letter-spacing: -.05em;
-    color:#555;
   }
   small{
     font-style: italic;
@@ -73,7 +71,7 @@
 
 
 .post-show{
-  font-size: 1.25em;
+  font-size: 1.15em;
   h1{
     margin:.25em auto;
     font-size: 3em;
