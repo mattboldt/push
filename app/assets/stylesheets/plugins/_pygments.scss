@@ -1,6 +1,8 @@
 
 .highlight{
   background: #181818; color: #AAA; font-family: Consolas, Monaco,"Lucida Console";
+  border-radius:.25em;
+  // overflow: hidden;
   // * { font-family: Consolas, Monaco,"Lucida Console";text-shadow:rgb(255,255,255) 0px 1px 0px; }
 
   // .highlight { background-color: #ffffcc }
@@ -104,6 +106,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    border-top-left-radius: .25em;
+    border-bottom-left-radius: .25em;
   }
 
   pre a:first-of-type::before {

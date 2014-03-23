@@ -42,4 +42,33 @@ $(document).on("ready page:load", function() {
     });
 
 
+    var snippets = $(".highlight");
+    $.each(snippets, function(x, y){
+        $(y).append("<a class=\"code-select\" href=\"#\">select</a>");
+    });
+
+    $(".code-select").click(function(e){
+        e.preventDefault();
+        $(this).parent(".highlight").find("pre").selectText();
+    });
+
+
 });
+
+jQuery.fn.selectText = function(){
+    var doc = document
+        , element = this[0]
+        , range, selection
+    ;
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+};
