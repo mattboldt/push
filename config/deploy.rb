@@ -3,6 +3,7 @@ lock '3.1.0'
 
 set :application, 'push'
 set :deploy_user, 'deploy'
+set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 
 set :scm, :git
 set :repo_url, 'git@github.com:mattboldt/push.git'
