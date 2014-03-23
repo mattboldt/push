@@ -81,6 +81,7 @@ namespace :deploy do
   before :deploy, "deploy:run_tests"
   # compile assets locally then rsync
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
-  after 'deploy:restart', 'unicorn:restart'   # app preloaded
+  after 'deploy:restart', 'unicorn:restart'
+  after 'deploy:restart', 'unicorn:reload'
   after :finishing, 'deploy:cleanup'
 end
