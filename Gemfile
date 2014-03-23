@@ -22,6 +22,8 @@ group :development do
 
   # if you are using RBENV
   gem 'capistrano-rbenv', "~> 2.0"
+
+  gem 'capistrano3-unicorn'
 end
 
 group :production do
