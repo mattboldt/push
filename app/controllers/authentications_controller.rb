@@ -1,8 +1,6 @@
 class AuthenticationsController < ApplicationController
   include GithubHelper
-  # before_action :authenticate_user!
   def index
-    @authentications = current_user.authentications if current_user
   end
 
   def new
@@ -12,6 +10,7 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+    # If the user & authentication exists, update their info
     if authentication
       authentication.update_attributes(
         :username => omniauth['info']['nickname'],
@@ -31,43 +30,30 @@ class AuthenticationsController < ApplicationController
         :uid => omniauth['uid'],
         :token => omniauth['credentials']['token']
       )
-
-      # create new repo
-      if Github.new.create_github_repo(current_user)
-        flash[:notice] = "Repo created."
-        redirect_to user_posts_path
-      else
-        flash[:notice] = "Couldn't create repo."
-        redirect_to user_posts_path
-      end
-
     else
       user = User.new
       user.apply_omniauth(omniauth)
       user.username = omniauth['info']['nickname']
       user.email = omniauth['info']['email']
       if user.save
-        # create new repo
-        Github.new.create_github_repo(user)
-        flash[:notice] = "User created in successfully."
+        flash[:notice] = "User created successfully."
         sign_in(:user, user)
-        redirect_to user_posts_path(user)
+        user.authentications.create!(
+          :username => omniauth['info']['nickname'],
+          :email => omniauth['info']['email'],
+          :provider => omniauth['provider'],
+          :uid => omniauth['uid'],
+          :token => omniauth['credentials']['token']
+        )
+        redirect_to setup_path
       else
+        flash[:notice] = "There was an error creating your account :("
         session[:omniauth] = omniauth.except('extra')
         redirect_to root_path
       end
     end
-    # raise omniauth.to_yaml
   end
 
-  # def create_from_github
-  #   omniauth = request.env["omniauth.auth"]
-  #   @user = User.find_by_github_uid(omniauth["uid"]) || User.create_from_omniauth(omniauth)
-  #   # Hook into your own authentication system!
-  #   sign_in @user
-  #   # This would normally be configured to return to the previous path
-  #   redirect root_path, :notice => "Welcome, #{@user.name}"
-  # end
 
   def destroy
     @authentication = current_user.authentications.find(params[:id])
@@ -77,12 +63,8 @@ class AuthenticationsController < ApplicationController
   end
 
   def failure
-    omniauth = request.env["omniauth.auth"]
-    @user = User.find_by_github_uid(omniauth["uid"]) || User.create_from_omniauth(omniauth)
-    # Hook into your own authentication system!
-    sign_in @user
-    # This would normally be configured to return to the previous path
-    redirect root_path, :notice => "Welcome, #{@user.name}"
+    flash[:notice] = "There was an error authenticaing with GitHub :("
+    redirect_to root_path
   end
 
   # private

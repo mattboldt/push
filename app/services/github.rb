@@ -22,20 +22,17 @@ class Github
       @@ref = 'heads/master'
     end
 
-    def create_github_repo(user)
+    def create_github_repo(user, repo_name)
       github_auth(user)
-      repo_name = "gitblog"
+      repo_name ||= "pushblog"
       post_params = {}
-      if @@github.create_repo(repo_name, :description => "A new repo", :auto_init => true)
-        post_params['git_file_name'] = "README.md"
-        post_params['git_commit_message'] = "1st commit"
-        post_params['body'] = "Here's the README of your brand new Push Blog!"
-        # commit!
-        commit_to_github(post_params)
-        return true
-      else
-        return false
-      end
+      create_repo = @@github.create_repo(repo_name, :description => "A new repo", :auto_init => true)
+      return create_repo.to_json
+      post_params['git_file_name'] = "README.md"
+      post_params['git_commit_message'] = "1st commit"
+      post_params['body'] = "Here's the README of your brand new Push Blog!"
+      # commit!
+      commit_to_github(post_params)
     end
 
     # # create a file on github

@@ -1,0 +1,16 @@
+
+<section id="setup-repo">
+     <%= image_tag avatar_url(current_user) %>
+	<h1>Hello, <%= current_user.username %>.</h1>
+	<h1>Let's setup your new blog on Push.</h1>
+	<h1>Step #1: Create your repo</h1>
+	<input type="text" value="<%= current_user.username %>-push" id="git-repo-name" />
+	<input type="button" value="Create Repo" id="git-create-repo" />
+</section>
+
+<div class="result"></div>
+
+
+<section>
+	<h1>Step #2: Choose a theme</h1>
+</section>

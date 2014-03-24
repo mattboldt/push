@@ -30,4 +30,5 @@ Push::Application.configure do
 
   config.client_id = "4aa1b7e1712747605cfb"
   config.client_secret = "a008e6f55ca6b96687141b7ed799475d21fd8118"
+  # config.consider_all_requests_local = false
 end

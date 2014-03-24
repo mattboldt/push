@@ -8,7 +8,12 @@ Push::Application.routes.draw do
   resources :authentications
 
   # Devise Authentication
+  devise_scope :user do
+    get "/users/sign_up" => redirect("/")
+    get "/users/sign_in" => redirect("/")
+  end
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => 'registrations' }
+
 
 
   # Index of posts & paginated posts
@@ -24,7 +29,6 @@ Push::Application.routes.draw do
     resources :posts, :controller => "users/posts", :path => "/" do
       post "pull", :controller => "users/posts", :action => "pull"
     end
-
   end
 
   # Markdown preview post request
@@ -34,6 +38,19 @@ Push::Application.routes.draw do
   # Omniauth w/ Github
   get "/auth/:provider/callback" => 'authentications#create'
   get "/auth/failure" => "authentications#failure"
+
+  # User setup
+  get "/setup" => "home#setup"
+
+  # REST GitHub stuff
+  namespace "rest" do
+    post "git-repo-setup", action: "git_repo_setup"
+
+    # errors
+    # get "/404" => "errors#not_found"
+    # get "/500" => ""
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
