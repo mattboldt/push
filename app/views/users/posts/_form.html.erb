@@ -70,11 +70,11 @@
         </div>
         <div class="field">
           <%= f.label :git_url %><br>
-          <%= f.text_field :git_url, :value => "https://github.com/#{current_user.username}/gitblog/blob/master/" %>
+          <%= f.text_field :git_url, :value => "https://github.com/#{current_user.username}/#{current_user.git_repo_name}/blob/master/" %>
         </div>
         <div class="field">
           <%= f.label :git_raw_url %><br>
-          <%= f.text_field :git_raw_url, :value => "https://raw.github.com/#{current_user.username}/gitblog/master/" %>
+          <%= f.text_field :git_raw_url, :value => "https://raw.github.com/#{current_user.username}/#{current_user.git_repo_name}/master/" %>
         </div>
       </div>
     </div>

@@ -10,15 +10,14 @@
 
 .post-index{
   position: relative;
-  width:100%;
-  margin:0 auto 1em 0;
+  margin:0 auto 1em;
   padding:0 0 1em 0;
-  border-bottom:rgba(255,255,255,0.1) 2px solid;
+  border-bottom:rgba(100,100,100,0.1) 2px solid;
   .img{
-    width:20%;
+    // width:20%;
   }
   .desc{
-    width:80%;
+    width:90%;
   }
   h2{
     margin:0 auto .25em;
@@ -49,12 +48,11 @@
   }
   .post-user-avi{
     margin:0 auto 1em;
-    width:55px;
-    height:55px;
-    border-radius: 100%;
+    width:40px;
+    height:40px;
+    border-radius: .15em;
     overflow: hidden;
     img{
-
       width: 100%;
       border:0;
     }
@@ -62,7 +60,7 @@
   .post-current-user{
     display: block;
     width:100%;
-    font-size: .75em;
+    font-size: .5em;
     font-style: italic;
     color:#999;
     text-align: center;
@@ -71,6 +69,8 @@
 
 
 .post-show{
+  margin:0;
+  max-width:900px;
   font-size: 1.2em;
   border-radius: .25em;
   h1{

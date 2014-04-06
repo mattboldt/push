@@ -1,5 +1,7 @@
 Push::Application.routes.draw do
 
+  root :to => 'posts#index'
+
   # redirect traffic to root
   constraints subdomain: 'www' do
     get ':any', to: redirect(subdomain: nil, path: '/%{any}'), any: /.*/
@@ -17,8 +19,8 @@ Push::Application.routes.draw do
 
 
   # Index of posts & paginated posts
-  get '/page/:page', :controller => 'posts', :action => 'index'
-  root :to => "posts#index"
+  get '/explore', :to => "posts#index"
+  get '/explore/:page', :controller => 'posts', :action => 'index'
 
   # Usernames under /@/
   resources :users, :path => "/@/" do

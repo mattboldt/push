@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324034637) do
+ActiveRecord::Schema.define(version: 20140406023102) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20140324034637) do
     t.datetime "updated_at"
     t.string   "git_username"
     t.boolean  "setup",                  default: false
+    t.string   "git_repo_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

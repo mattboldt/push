@@ -17,7 +17,7 @@ class Github
       @@username = user.authentications.find(:first, :conditions => { :provider => 'github' }).username
 
       # set static repo name
-      @@repo = @@username + '/gitblog'
+      @@repo = @@username + "/" + user.git_repo_name
       # we'll always be on the master branch
       @@ref = 'heads/master'
     end

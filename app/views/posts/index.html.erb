@@ -3,16 +3,6 @@
   <% for post in @posts %>
 	  <article class="post-index">
 	  	<div class="media">
-		  	<div class="img">
-			  	<div class="post-user-avi">
-			  		<%= link_to user_posts_path(post.user) do %>
-			  			<%= image_tag avatar_url(post.user) %>
-			  		<% end %>
-			  	</div>
-			  	<% if post.user == current_user %>
-		  			<span class="post-current-user">That's you!</span>
-		  		<% end %>
-		  	</div>
 
 			<div class="desc">
 				<span class="post-timestamp"><%= post_timestamp(post.created_at) %></span>
@@ -22,6 +12,16 @@
 
 			    <small>By <%= user_post_compliment %> <%= link_to post.user.username, user_posts_path(post.user) %>. About <%= post.body.split.size %> words.</small>
 			</div>
+			<div class="img">
+			  	<div class="post-user-avi">
+			  		<%= link_to user_posts_path(post.user) do %>
+			  			<%= image_tag avatar_url(post.user) %>
+			  		<% end %>
+			  	</div>
+			  	<% if post.user == current_user %>
+		  			<span class="post-current-user">That's you!</span>
+		  		<% end %>
+		  	</div>
 		</div>
 	  </article>
   <% end %>

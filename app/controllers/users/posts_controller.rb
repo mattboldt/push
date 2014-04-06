@@ -71,11 +71,11 @@ class Users::PostsController < ApplicationController
     }
     final_params = post_params.merge(commit_params)
     respond_to do |format|
-      if @post.update(post_params)
+      if @post.update_attributes(post_params)
         commit = Github.new.commit_to_github(final_params)
         if commit
           format.html { redirect_to user_post_path(current_user, @post), notice: 'Post was successfully updated.' }
-          format.json { head :no_content }
+          format.json { render json: @post }
         else
           format.html { render action: 'edit' }
           format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -121,7 +121,7 @@ class Users::PostsController < ApplicationController
 
     # strong params
     def post_params
-      params.require(:post).permit(:title, :desc, :slug, :git_url, :git_raw_url, :user_id, :body, :git_file_name, :git_commit_message, :git_created_at)
+      params.require(:post).permit(:title, :desc, :slug, :git_url, :git_raw_url, :user_id, :body, :git_file_name, :git_commit_message, :git_created_at, :git_repo_name)
     end
 
     # GitHub Repo Connectivity
