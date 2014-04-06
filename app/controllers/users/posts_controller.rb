@@ -4,19 +4,18 @@ class Users::PostsController < ApplicationController
   require 'redcarpet'
   require 'open-uri'
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:index, :show]
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   before_action :require_permission, only: [:edit, :update, :destroy]
   before_action :github_auth, only: [:new, :edit, :create, :update, :destroy]
 
   # GET /posts
   def index
-    @user = User.find_by_username(params[:user_id])
     @posts = @user.posts.all
   end
 
   # GET /posts/1
   def show
-    @user = User.find_by_username(params[:user_id])
     if @post
       @body = render_markdown(@post.body)
     end
@@ -88,7 +87,7 @@ class Users::PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url }
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end
@@ -114,9 +113,19 @@ class Users::PostsController < ApplicationController
 
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+    def set_user
+      @user = User.find_by_username(params[:user_id])
+    end
+
     def set_post
       @post = User.find_by_username(params[:user_id]).posts.find_by_slug(params[:id])
+      if !@post
+        respond_to do |format|
+          format.html { redirect_to root_path, notice: 'Post not found :(' }
+          format.json { render json: '@post.errors', status: :unprocessable_entity }
+        end
+      end
     end
 
     # strong params

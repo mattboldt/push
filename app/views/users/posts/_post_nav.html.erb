@@ -17,7 +17,7 @@
 			<% end %>
 		</li>
 		<li>
-			<%= link_to user_post_path(@post.user, @post), method: "destroy", confirm: "You sure? This file will also be removed from your GitHub repo." do %>
+			<%= link_to user_post_path(@post.user, @post), method: "delete", confirm: "You sure? This file will also be removed from your GitHub repo." do %>
 			<i class="fa fa-minus"></i> Destroy
 			<% end %>
 		</li>
